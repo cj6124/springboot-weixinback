@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenjie.weixinback.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.wenjie.weixinback.pojo.Goods" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_videourl" property="goodsVideourl" jdbcType="VARCHAR" />
+    <result column="goods_picurl" property="goodsPicurl" jdbcType="VARCHAR" />
+    <result column="goods_originalprice" property="goodsOriginalprice" jdbcType="DECIMAL" />
+    <result column="goods_minprice" property="goodsMinprice" jdbcType="DECIMAL" />
+    <result column="goods_characteristic" property="goodsCharacteristic" jdbcType="VARCHAR" />
+    <result column="goods_content" property="goodsContent" jdbcType="VARCHAR" />
+    <result column="goods_status" property="goodsStatus" jdbcType="TINYINT" />
+    <result column="goods_udtime" property="goodsUdtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>
