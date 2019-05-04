@@ -30,15 +30,15 @@ public class CopyFileUtil {
             f.mkdirs();
         }
         //重置文件名
-        String picName = FileRenameUtil.renameFileName(sourceFile.getOriginalFilename());
+        String fileName = FileRenameUtil.renameFileName(sourceFile.getOriginalFilename());
         //返回给前端的路径
-        String returnPath = date + "/" + picName;
+        String returnPath = date + "/" + fileName;
 
         //保存文件
         FileOutputStream fileOutputStream = null;
         InputStream inputStream = null;
         try {
-            String finalPath = path + "/" + picName;
+            String finalPath = path + "/" + fileName;
             File file = new File(finalPath);
             fileOutputStream = new FileOutputStream(file);
             inputStream = sourceFile.getInputStream();
