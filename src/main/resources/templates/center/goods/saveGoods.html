@@ -135,11 +135,23 @@
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
 	                            			<input id="goodsPicurl" name="goodsPicurl" type="text" class="form-control" placeholder="必须设置，此栏在上传封面（.jpg.png）后自动填写" readonly/>
-											<input id="pic" type="file" name="pic" accept="image/jpeg,image/png" multiple/>
+											<input id="pic" type="file" name="pic" accept="image/jpeg,image/png"/>
 											<div id="picContent"></div>
 	                            		</div>
 									</div>
 								</div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><span class="field-required"> * </span>商品轮播图</label>
+                                    <div class="col-md-4">
+                                        <div id="input-error">
+                                            <div id="pics-con">
+                                                <input id="goodsPics" name="goodsPics" type="text" class="form-control" placeholder="可批量选择图片(上传完后此处显示上传成功)" readonly/>
+                                                <input id="pics" type="file" name="pic" accept="image/jpeg,image/png" multiple/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 		                                                  
 							</div>
 	                                                        
@@ -165,7 +177,6 @@
 
     // 上传单张封面
     $("#pic").fileupload({
-        multipart: true,
 		url: '/file/uploadImage',
     	dataType: "json",
     	done: function(e, data) {
@@ -186,6 +197,35 @@
     	},
         fail: function () {
             layer.msg('上传失败了', {icon: 5});
+        }
+    });
+
+    // 上传轮播图，可批量
+    $("#pics").fileupload({
+        multipart: true,
+        url: '/file/uploadImage',
+        dataType: "json",
+        done: function(e, data) {
+
+            if (data.result.status != '200') {
+                layer.msg('上传失败了', {icon: 5});
+                $("#goodsPics").val("上传失败");
+            } else {
+                var fileServer = $("#fileServer").val();
+                var url = fileServer + data.result.data;
+                $("#pics-con").append("<img class='img-rounded img-responsive' src='" + url + "' />");
+                $("#pics-con").append("<input hidden='hidden' name='picsUrl' value='"+ url +"' />");
+                $("#goodsPics").val("上传成功");
+                layer.msg('上传成功', {
+                    icon: 6,
+                    time: 2000
+                });
+            }
+
+        },
+        fail: function () {
+            layer.msg('上传失败了', {icon: 5});
+            $("#goodsPics").val("上传失败");
         }
     });
 
