@@ -1,23 +1,16 @@
 package com.wenjie.weixinback.controller;
 
-import com.wenjie.weixinback.common.enums.ResultEnum;
 import com.wenjie.weixinback.common.utils.CopyFileUtil;
 import com.wenjie.weixinback.common.utils.DateUtil;
-import com.wenjie.weixinback.common.utils.FileRenameUtil;
 import com.wenjie.weixinback.common.utils.JsonResult;
 import com.wenjie.weixinback.config.ResourcesPathConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 /**

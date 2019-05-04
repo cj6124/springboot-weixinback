@@ -124,8 +124,8 @@
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
 		                            		<input id="goodsVideourl" name="goodsVideourl" type="text" class="form-control" placeholder="可不设置，此栏在上传视频(.mp4格式)后自动填写" readonly>
-											<input id="" type="file" name="" data-url="" accept="audio/mp4,video/mp4"/>
-											<div id="videoContent">上传后返回播放地址</div>
+											<input id="video" type="file" name="video" accept="audio/mp4,video/mp4"/>
+											<div id="videoContent"></div>
 		                            	</div>
 									</div>
 								</div>
@@ -162,7 +162,8 @@
 	</div>
 	
 <script type="text/javascript">
-    
+
+    // 上传单张封面
     $("#pic").fileupload({
         multipart: true,
 		url: '/file/uploadImage',
@@ -174,12 +175,39 @@
     		} else {
     			var fileServer = $("#fileServer").val();
     			var url = fileServer + data.result.data;
-    			$("#picContent").html("<img class='img-rounded img-responsive' src='" + url + "' />");
+    			$("#videoContent").html("<img class='img-rounded img-responsive' src='" + url + "' />");
     			$("#goodsPicurl").val(url);
-                layer.msg('上传成功', {icon: 6});
+                layer.msg('上传成功', {
+                    icon: 6,
+                    time: 2000
+                });
     		}
 
     	},
+        fail: function () {
+            layer.msg('上传失败了', {icon: 5});
+        }
+    });
+
+    // 上传视频
+    $("#video").fileupload({
+        url: '/file/uploadVideo',
+        dataType: "json",
+        done: function(e, data) {
+            if (data.result.status != '200') {
+                layer.msg('上传失败了', {icon: 5});
+            } else {
+                var fileServer = $("#fileServer").val();
+                var url = fileServer + data.result.data;
+                $("#videoContent").html("<a href='" + url + "' target='_blank'>点我播放</a>");
+                $("#goodsVideourl").val(url);
+                layer.msg('上传成功', {
+                    icon: 6,
+                    time: 2000
+                });
+            }
+
+        },
         fail: function () {
             layer.msg('上传失败了', {icon: 5});
         }
