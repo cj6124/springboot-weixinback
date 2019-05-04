@@ -7,6 +7,7 @@
     -->
     <id column="category_id" property="categoryId" jdbcType="VARCHAR" />
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_status" property="categoryStatus" jdbcType="TINYINT" />
     <result column="category_udtime" property="categoryUdtime" jdbcType="TIMESTAMP" />
   </resultMap>
 </mapper>

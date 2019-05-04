@@ -17,6 +17,6 @@ public class TestController {
 
     @RequestMapping("/addBgm")
     public ModelAndView test1(){
-        return new ModelAndView("center/video/addBgm");
+        return new ModelAndView("saveGoods");
     }
 }

@@ -8018,7 +8018,7 @@ wysihtml5.views.View = Base.extend(
 
     isEmpty: function() {
       var innerHTML               = this.element.innerHTML,
-          elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, svg, video, audio, button, input, select, textarea";
+          elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, svg, goods, audio, button, input, select, textarea";
       return innerHTML === ""              || 
              innerHTML === this.CARET_HACK ||
              this.hasPlaceholderSet()      ||

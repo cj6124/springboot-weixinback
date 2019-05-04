@@ -12,8 +12,10 @@
     <result column="goods_picurl" property="goodsPicurl" jdbcType="VARCHAR" />
     <result column="goods_originalprice" property="goodsOriginalprice" jdbcType="DECIMAL" />
     <result column="goods_minprice" property="goodsMinprice" jdbcType="DECIMAL" />
+    <result column="goods_stock" property="goodsStock" jdbcType="INTEGER" />
     <result column="goods_characteristic" property="goodsCharacteristic" jdbcType="VARCHAR" />
     <result column="goods_content" property="goodsContent" jdbcType="VARCHAR" />
+    <result column="goods_ishot" property="goodsIsHot" jdbcType="TINYINT" />
     <result column="goods_status" property="goodsStatus" jdbcType="TINYINT" />
     <result column="goods_udtime" property="goodsUdtime" jdbcType="TIMESTAMP" />
   </resultMap>

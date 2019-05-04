@@ -55,11 +55,11 @@
     );
 
     // The File Upload Video Preview plugin extends the fileupload widget
-    // with video preview functionality:
+    // with goods preview functionality:
     $.widget('blueimp.fileupload', $.blueimp.fileupload, {
 
         options: {
-            // The regular expression for the types of video files to load,
+            // The regular expression for the types of goods files to load,
             // matched against the file type:
             loadVideoFileTypes: /^video\/.*$/
         },
@@ -68,8 +68,8 @@
 
         processActions: {
 
-            // Loads the video file given via data.files and data.index
-            // as video element if the browser supports playing it.
+            // Loads the goods file given via data.files and data.index
+            // as goods element if the browser supports playing it.
             // Accepts the options fileTypes (regular expression)
             // and maxFileSize (integer) to limit the files to load:
             loadVideo: function (data, options) {
@@ -97,7 +97,7 @@
                 return data;
             },
 
-            // Sets the video element as a property of the file object:
+            // Sets the goods element as a property of the file object:
             setVideo: function (data, options) {
                 if (data.video && !options.disabled) {
                     data.files[data.index][options.name || 'preview'] = data.video;

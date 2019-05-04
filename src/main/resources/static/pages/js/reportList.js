@@ -6,7 +6,7 @@ var forbidVideo = function(videoId) {
 	}
 	
 	$.ajax({
-    	url: $("#hdnContextPath").val() + "/video/forbidVideo.action?videoId=" + videoId,
+    	url: $("#hdnContextPath").val() + "/goods/forbidVideo.action?videoId=" + videoId,
     	type: "POST",
     	async: false,
     	success: function(data) {
@@ -34,7 +34,7 @@ var UsersReportsList = function () {
 		var jqGrid = $("#usersReportsList");  
         jqGrid.jqGrid({  
             caption: "被举报的视频列表",  
-            url: hdnContextPath + "/video/reportList.action",
+            url: hdnContextPath + "/goods/reportList.action",
             mtype: "post",
             styleUI: 'Bootstrap',//设置jqgrid的全局样式为bootstrap样式  
             datatype: "json",
