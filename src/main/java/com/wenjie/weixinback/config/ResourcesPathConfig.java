@@ -12,12 +12,22 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "resource")
 public class ResourcesPathConfig {
     /**
-     * 图片的存放路径
+     * 图片存放虚拟目录
      */
-    private String imagepath;
+    private String virtulimagepath;
 
     /**
-     * 视频存放路径
+     * 视频存放虚拟目录
      */
-    private String videopath;
+    private String virtulvideopath;
+
+    /**
+     * 图片存放真实目录
+     */
+    private String realimagepath;
+
+    /**
+     * 视频存放真实目录
+     */
+    private String realvideopath;
 }

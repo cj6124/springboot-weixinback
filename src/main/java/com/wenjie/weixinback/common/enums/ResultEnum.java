@@ -11,7 +11,9 @@ import java.io.Serializable;
 @Getter
 public enum ResultEnum implements Serializable {
 
-    SUCCESS(0, "成功"),
+    SUCCESS(0, "操作成功"),
+
+    UPLOAD_ERROR(1, "上传失败");
     ;
 
     private Integer code;

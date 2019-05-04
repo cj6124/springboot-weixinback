@@ -135,8 +135,8 @@
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
 	                            			<input id="goodsPicurl" name="goodsPicurl" type="text" class="form-control" placeholder="必须设置，此栏在上传封面（.jpg.png）后自动填写" readonly/>
-											<input id="file" type="file" name="file" data-url="/video/bgmUpload.action" accept="image/jpeg,image/png"/>
-											<div id="picContent"><img class="img-rounded img-responsive" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4082667085,222464978&fm=26&gp=0.jpg"></div>
+											<input id="pic" type="file" name="pic" accept="image/jpeg,image/png" multiple/>
+											<div id="picContent"></div>
 	                            		</div>
 									</div>
 								</div>
@@ -163,20 +163,26 @@
 	
 <script type="text/javascript">
     
-    $("#file").fileupload({
+    $("#pic").fileupload({
+        multipart: true,
+		url: '/file/uploadImage',
     	dataType: "json",
     	done: function(e, data) {
-    		console.log(data);
-    		
+
     		if (data.result.status != '200') {
-    			alert("上传失败...");
+                layer.msg('上传失败了', {icon: 5});
     		} else {
-    			var bgmServer = $("#bgmServer").val();
-    			var url = bgmServer + data.result.data;
-    			$("#bgmContent").html("<a href='" + url + "' target='_blank'>点我播放</a>");
+    			var fileServer = $("#fileServer").val();
+    			var url = fileServer + data.result.data;
+    			$("#picContent").html("<img class='img-rounded img-responsive' src='" + url + "' />");
+    			$("#goodsPicurl").val(url);
+                layer.msg('上传成功', {icon: 6});
     		}
-    		
-    	}
+
+    	},
+        fail: function () {
+            layer.msg('上传失败了', {icon: 5});
+        }
     });
     
     var submitBgm = function() {
@@ -270,8 +276,6 @@
         	submitBgm();
         }
     });
-    
-    
 </script>
 
 </div>
