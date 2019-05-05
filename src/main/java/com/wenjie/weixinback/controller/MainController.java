@@ -39,4 +39,9 @@ public class MainController {
 
         return new ModelAndView("center/goods/saveGoods", "categories", categories);
     }
+
+    @RequestMapping("/goodsListPage")
+    public ModelAndView goodListPage(){
+        return new ModelAndView("center/goods/goodsList");
+    }
 }

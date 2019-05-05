@@ -12,10 +12,21 @@ import java.util.Date;
  */
 @Data
 public class GoodsVO implements Serializable {
+
+    /**
+     * 商品id
+     */
+    private String goodsId;
+
     /**
      * 商品所属分类id
      */
     private String categoryId;
+
+    /**
+     * 商品所属分类名字
+     */
+    private String categoryName;
 
     /**
      * 商品名称

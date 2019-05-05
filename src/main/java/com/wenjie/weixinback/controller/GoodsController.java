@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author chenwenjie
+ * 操作商品的controller
  */
 @Slf4j
 @Controller
@@ -24,6 +25,11 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
+    /**
+     * 增加商品接口
+     * @param goodsVO
+     * @return
+     */
     @PostMapping("/addGoods")
     @ResponseBody
     public JsonResult addGoods(GoodsVO goodsVO){
@@ -39,5 +45,6 @@ public class GoodsController {
 
         return JsonResult.ok();
     }
+
 
 }
