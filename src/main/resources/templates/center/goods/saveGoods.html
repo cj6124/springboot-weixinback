@@ -213,7 +213,7 @@
     		} else {
     			var fileServer = $("#fileServer").val();
     			var url = fileServer + data.result.data;
-    			$("#videoContent").html("<img class='img-rounded img-responsive' src='" + url + "' />");
+    			$("#picContent").html("<img class='img-rounded img-responsive' src='" + url + "' />");
     			$("#goodsPicurl").val(url);
                 layer.msg('上传成功', {
                     icon: 6,
@@ -242,7 +242,7 @@
                 var url = fileServer + data.result.data;
                 $("#pics-con").append("<p>" +
                                         "<img ondblclick='deleteImage(this)' class='img-rounded img-responsive' src='" + url + "' />" +
-                                        "<input hidden='hidden' name='picsUrl' value='\"+ url +\"' />" +
+                                        "<input hidden='hidden' name='picsUrl' value='" + url+ "' />" +
                                       "</p>");
                 $("#goodsPics").val("上传成功(双击图片可删除)");
                 layer.msg('上传成功', {
@@ -287,20 +287,25 @@
         }
     });
     
-    var submitBgm = function() {
+    var submitFrom = function() {
     	$('#saveGoodsForm').ajaxSubmit({
-    		url: $('#hdnContextPath').val() + '/video/addBgm.action',
+    		url: $("#fileServer").val() + '/goods/addGoods',
     		type: 'POST',
+			data: {
+                'goodsContent': editor.txt.html()
+			},
     		success: function(data) {
     			
-    			if (data.status == 200 && data.msg == 'OK') {
-    				alert('BGM添加成功...')
+    			if (data.status == 200) {
+                    layer.msg('商品添加成功', {icon: 6});
     			} else {
-    				alert('BGM添加失败...')
+                    layer.msg(data.msg, {icon: 5});
     			}
-    			
-    			$("#bgmListMenu").click();
-    		}
+    			//todo 后期改成跳到商品列表
+    			// $("#bgmListMenu").click();
+    		},fail: function (e) {
+                layer.msg('出现了未知错误', {icon: 5});
+            }
     	});
     }
     
@@ -323,7 +328,6 @@
                 min: 0.01
             },
             goodsMinprice: {
-                max:$('#goodsOriginalprice').val(),
                 min: 0.01
             },
             goodsStock: {
@@ -348,7 +352,6 @@
                 min: "最低价格不能低于0.01"
             },
             goodsMinprice: {
-                max: "折扣价不能大于原价",
                 min: "最低价格不能低于0.01"
             },
             goodsStock: {
@@ -375,7 +378,7 @@
         },
         submitHandler: function(form) {
         	// FIXME
-        	submitBgm();
+        	submitFrom();
         }
     });
 </script>
