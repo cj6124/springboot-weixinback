@@ -1,5 +1,6 @@
 package com.wenjie.weixinback.service;
 
+import com.wenjie.weixinback.common.utils.PagedResult;
 import com.wenjie.weixinback.pojo.Goods;
 
 /**
@@ -13,4 +14,12 @@ public interface GoodsService {
      * @param goods 商品pojo
      */
     public void addGoods(String[] picsUrl, Goods goods);
+
+    /**
+     * 查询商品列表
+     * @param page 查询第几页
+     * @param pageSize 页面大小
+     * @return
+     */
+    public PagedResult queryAllGoods(Integer page, Integer pageSize);
 }
