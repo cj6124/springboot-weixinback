@@ -1,6 +1,5 @@
 package com.wenjie.weixinback.controller;
 
-import com.baidu.ueditor.ActionEnter;
 import com.wenjie.weixinback.common.utils.CopyFileUtil;
 import com.wenjie.weixinback.common.utils.DateUtil;
 import com.wenjie.weixinback.common.utils.FileRenameUtil;
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,21 +30,6 @@ public class UpLoadController {
     @Autowired
     private ResourcesPathConfig resourcesPathConfig;
 
-    @RequestMapping("/config")
-    public void config(HttpServletRequest request, HttpServletResponse response){
-        response.setContentType("application/json");
-        String rootPath = request.getSession().getServletContext().getRealPath("/");
-        try {
-            String exec = new ActionEnter(request, rootPath).exec();
-            PrintWriter writer = response.getWriter();
-            writer.write(exec);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @PostMapping(value = "/uploadImage", headers = "content-type=multipart/form-data")
     public JsonResult uploadFile(MultipartFile pic) throws IOException {
@@ -69,7 +52,7 @@ public class UpLoadController {
         return JsonResult.ok(returnPath);
     }
 
-    @PostMapping("uploadimage")
+    @PostMapping("/uploadimage")
     public Map<String,Object> ueditorUpload(MultipartFile upfile) throws IOException {
         //设置目录
         String date = DateUtil.getDate();
@@ -105,13 +88,11 @@ public class UpLoadController {
         }
 
         //设置返回集合
+        List<String> list = new ArrayList<>();
+        list.add("http://localhost:8080/" + returnPath);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("state", "SUCCESS");
-        params.put("url", returnPath);
-        params.put("title", fileName);
-//        params.put("size", upfile.getSize());
-        params.put("original", fileName);
-//        params.put("type", upfile.getContentType());
+        params.put("errno", "0");
+        params.put("data", list);
         return params;
     }
 }
