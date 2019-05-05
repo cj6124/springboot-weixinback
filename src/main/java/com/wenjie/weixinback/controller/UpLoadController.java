@@ -4,6 +4,7 @@ import com.wenjie.weixinback.common.utils.CopyFileUtil;
 import com.wenjie.weixinback.common.utils.DateUtil;
 import com.wenjie.weixinback.common.utils.FileRenameUtil;
 import com.wenjie.weixinback.common.utils.JsonResult;
+import com.wenjie.weixinback.config.ProjectUrlConfig;
 import com.wenjie.weixinback.config.ResourcesPathConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -29,6 +30,9 @@ public class UpLoadController {
 
     @Autowired
     private ResourcesPathConfig resourcesPathConfig;
+
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
 
 
     @PostMapping(value = "/uploadImage", headers = "content-type=multipart/form-data")
@@ -57,39 +61,11 @@ public class UpLoadController {
         //设置目录
         String date = DateUtil.getDate();
         String path = resourcesPathConfig.getRealimagepath() + date;
-        // 如果日期目录不存在,创建文件夹
-        File f = new File(path);
-        if(!f.exists()){
-            f.mkdirs();
-        }
-        //重置文件名
-        String fileName = FileRenameUtil.renameFileName(upfile.getOriginalFilename());
-        //返回给前端的路径
-        String returnPath = date + "/" + fileName;
-
-        //保存文件
-        FileOutputStream fileOutputStream = null;
-        InputStream inputStream = null;
-        try {
-            String finalPath = path + "/" + fileName;
-            File file = new File(finalPath);
-            fileOutputStream = new FileOutputStream(file);
-            inputStream = upfile.getInputStream();
-            IOUtils.copy(inputStream, fileOutputStream);
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            //关闭资源
-            if (null != fileOutputStream && null != inputStream){
-                fileOutputStream.flush();
-                fileOutputStream.close();
-                inputStream.close();
-            }
-        }
+        String returnPath = CopyFileUtil.copyFileToPath(date, upfile, path);
 
         //设置返回集合
         List<String> list = new ArrayList<>();
-        list.add("http://localhost:8080/" + returnPath);
+        list.add(projectUrlConfig.getServerurl() + returnPath);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("errno", "0");
         params.put("data", list);
