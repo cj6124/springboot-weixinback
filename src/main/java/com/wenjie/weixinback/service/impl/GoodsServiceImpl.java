@@ -70,7 +70,12 @@ public class GoodsServiceImpl implements GoodsService {
             GoodsVO goodsVO = new GoodsVO();
             BeanUtils.copyProperties(e, goodsVO);
             //查询该商品分类对应的名字
-            goodsVO.setCategoryName(categoryMapper.selectByPrimaryKey(goodsVO.getCategoryId()).getCategoryName());
+            Category category = categoryMapper.selectByPrimaryKey(goodsVO.getCategoryId());
+            if (category.getCategoryStatus() == 0){
+                goodsVO.setCategoryName(category.getCategoryName() + "(已禁用)");
+            }else {
+                goodsVO.setCategoryName(category.getCategoryName());
+            }
             return goodsVO;
         }).collect(Collectors.toList());
 
