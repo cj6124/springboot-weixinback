@@ -11,5 +11,5 @@ public interface ImageService {
      * @param goodsId 商品id
      * @return 图片url数组
      */
-    public List<Image> queryPics(String goodsId);
+    public List<Image> queryPicsByGoodsId(String goodsId);
 }

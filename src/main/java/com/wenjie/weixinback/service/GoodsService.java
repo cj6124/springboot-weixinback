@@ -22,4 +22,11 @@ public interface GoodsService {
      * @return
      */
     public PagedResult queryAllGoods(Integer page, Integer pageSize);
+
+    /**
+     * 查询单个商品
+     * @param goodsId 商品id
+     * @return 商品的pojo
+     */
+    public Goods selectOneGoodsById(String goodsId);
 }

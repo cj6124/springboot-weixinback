@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,5 +87,11 @@ public class GoodsServiceImpl implements GoodsService {
         result.setRecords(pageList.getTotal());
 
         return result;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Goods selectOneGoodsById(String goodsId) {
+        return goodsMapper.selectByPrimaryKey(goodsId);
     }
 }

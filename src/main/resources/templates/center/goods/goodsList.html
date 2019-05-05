@@ -36,7 +36,7 @@
     //
     /////////////////////////////////////////////
 
-    //查看轮播图函数
+    //查看轮播图函数 todo 加上加载图标，不然卡住一段时间会以为是死机
     var showPics = function (goodsId) {
         $.ajax({
             url: $("#fileServer").val() + '/goods/queryPics?goodsId=' + goodsId,
@@ -52,6 +52,14 @@
                 layer.msg('未知错误,请联系管理员', {icon: 5});
             }
         });
+    }
+    
+    //跳转到更改页面
+    var showSaveGoodsPage = function (goodsId) {
+        $('#saveGoodsMenu').attr("href", "/back/saveGoodsPage?goodsId=" + goodsId);
+        $('#saveGoodsMenu').click();
+        $('#saveGoodsMenu').attr("href", "/back/saveGoodsPage");
+
     }
 
     //删除商品函数
@@ -104,7 +112,7 @@
                     { name: 'goodsId', index: 'goodsId', hidden: true},
                     { name: 'goodsPicurl', index: 'goodsPicurl', width: 20,
                         formatter: function (cellvalue, option, rowObject) {
-                            return "<img class='img-rounded img-responsive' src='" + cellvalue + "'/>";
+                            return "<img style='width: 100px;height: 90px' class='img-rounded img-responsive' src='" + cellvalue + "'/>";
                         }
                     },
                     { name: 'goodsName', index: 'goodsName', width: 20 },
@@ -134,7 +142,7 @@
                     },
                     { name: '', index: '', width: 20,
                         formatter: function (cellvalue, option, rowObject) {
-                            var html = '<button type="button" class="btn btn-primary" onclick=showPics("' + rowObject.goodsId + '")>' +
+                            var html = '<button type="button" class="btn btn-primary" onclick=showSaveGoodsPage("' + rowObject.goodsId + '")>' +
                                             '<span class="glyphicon glyphicon-wrench"></span> 编辑' +
                                         '</button>' +
                                         '<p></p>' +

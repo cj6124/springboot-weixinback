@@ -67,7 +67,7 @@ public class GoodsController {
     @RequestMapping("/queryPics")
     public Map<String, Object> queryPics(String goodsId){
 
-        List<Image> images = imageService.queryPics(goodsId);
+        List<Image> images = imageService.queryPicsByGoodsId(goodsId);
         LayerImgVO[] layerImgVOS = new LayerImgVO[images.size()];
         //初始化数组
         for (int i = 0; i < layerImgVOS.length; i++){

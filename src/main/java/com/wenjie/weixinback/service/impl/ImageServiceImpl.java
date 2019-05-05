@@ -23,7 +23,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
-    public List<Image> queryPics(String goodsId) {
+    public List<Image> queryPicsByGoodsId(String goodsId) {
         Example imageExample = new Example(Image.class);
         Criteria criteria = imageExample.createCriteria();
         criteria.andEqualTo("goodsId", goodsId);
