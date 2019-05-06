@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,5 +95,26 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Goods selectOneGoodsById(String goodsId) {
         return goodsMapper.selectByPrimaryKey(goodsId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void updataGoods(String[] picsUrl, Goods goods) {
+        goodsMapper.updateByPrimaryKeySelective(goods);
+        //将商品原来的轮播图删除再重新插入  ----  可以实现动态更新，但是阅读性会很差，所以选择这种处理方式，可用image_id实现
+        Example picsExample = new Example(Image.class);
+        Criteria criteria = picsExample.createCriteria();
+        criteria.andEqualTo("goodsId", goods.getGoodsId());
+        imageMapper.deleteByExample(picsExample);
+        //重新插入轮播图
+        for (String picurl : picsUrl) {
+            //生成图片随机id
+            String imageId = KeyUtil.genUniqueKey();
+            Image image = new Image();
+            image.setImageId(imageId);
+            image.setGoodsId(goods.getGoodsId());
+            image.setImageUrl(picurl);
+            imageMapper.insertSelective(image);
+        }
     }
 }

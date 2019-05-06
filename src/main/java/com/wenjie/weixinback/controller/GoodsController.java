@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -39,18 +40,27 @@ public class GoodsController {
      * @param goodsVO
      * @return
      */
-    @PostMapping("/addGoods")
+    @PostMapping("/saveGoods")
     @ResponseBody
-    public JsonResult addGoods(GoodsVO goodsVO){
+    public JsonResult saveGoods(GoodsVO goodsVO){
 
         //打折价格大于原价则返回信息
         if (null != goodsVO.getGoodsMinprice() && goodsVO.getGoodsMinprice().compareTo(goodsVO.getGoodsOriginalprice()) == 1){
             return JsonResult.errorMsg(ResultEnum.PRICE_ERROR.getMessage());
         }
+        //必须填写商品详情
+        if (StringUtils.isEmpty(goodsVO.getGoodsContent())){
+            return JsonResult.errorMsg(ResultEnum.GOODS_CONTENT.getMessage());
+        }
 
         Goods goods = new Goods();
         BeanUtils.copyProperties(goodsVO, goods);
-        goodsService.addGoods(goodsVO.getPicsUrl(), goods);
+        //id为空则是增加商品
+        if (StringUtils.isEmpty(goodsVO.getGoodsId())) {
+            goodsService.addGoods(goodsVO.getPicsUrl(), goods);
+        }else {
+            goodsService.updataGoods(goodsVO.getPicsUrl(), goods);
+        }
 
         return JsonResult.ok();
     }

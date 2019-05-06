@@ -9,7 +9,9 @@ import java.util.Date;
 
 /**
  * @author chenwenjie
+ * @link https://www.layui.com/doc/modules/layer.html
  * json属性跟layer的相册返回格式对应
+ *
  */
 @Data
 public class LayerImgVO implements Serializable {

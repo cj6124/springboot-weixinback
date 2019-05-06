@@ -29,4 +29,11 @@ public interface GoodsService {
      * @return 商品的pojo
      */
     public Goods selectOneGoodsById(String goodsId);
+
+    /**
+     * 更新商品
+     * @param picsUrl 轮播图的url
+     * @param goods 商品pojo
+     */
+    public void updataGoods(String[] picsUrl, Goods goods);
 }

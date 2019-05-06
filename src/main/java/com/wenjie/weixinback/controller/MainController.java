@@ -43,6 +43,7 @@ public class MainController {
         return new ModelAndView("center/center");
     }
 
+
     /**
      * 返回保存商品页面的视图
      * @return ModelAndView
@@ -63,6 +64,7 @@ public class MainController {
         }
         return "center/goods/saveGoods";
     }
+
 
     /**
      * 返回商品列表的视图

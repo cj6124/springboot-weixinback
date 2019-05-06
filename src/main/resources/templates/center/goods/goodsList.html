@@ -38,11 +38,14 @@
 
     //查看轮播图函数 todo 加上加载图标，不然卡住一段时间会以为是死机
     var showPics = function (goodsId) {
+        var loading = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.ajax({
             url: $("#fileServer").val() + '/goods/queryPics?goodsId=' + goodsId,
             type: 'GET',
             success: function (data) {
-                console.log(data)
+                layer.close(loading);
                 layer.photos({
                     photos: data //格式见API文档手册页
                     ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机

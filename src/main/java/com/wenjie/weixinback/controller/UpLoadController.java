@@ -56,16 +56,27 @@ public class UpLoadController {
         return JsonResult.ok(returnPath);
     }
 
+    /**
+     * 富文本的图片上传
+     * @param upfile 表单中的参数名
+     * @return 复合富文本的返回体
+     * @throws IOException io异常
+     * @link https://www.kancloud.cn/wangfupeng/wangeditor3/335782
+     */
     @PostMapping("/uploadimage")
-    public Map<String,Object> ueditorUpload(MultipartFile upfile) throws IOException {
-        //设置目录
-        String date = DateUtil.getDate();
-        String path = resourcesPathConfig.getRealimagepath() + date;
-        String returnPath = CopyFileUtil.copyFileToPath(date, upfile, path);
+    public Map<String,Object> ueditorUpload(MultipartFile[] upfile) throws IOException {
 
         //设置返回集合
         List<String> list = new ArrayList<>();
-        list.add(projectUrlConfig.getServerurl() + returnPath);
+
+        for(int i = 0; i < upfile.length; i++){
+            //设置目录
+            String date = DateUtil.getDate();
+            String path = resourcesPathConfig.getRealimagepath() + date;
+            String returnPath = CopyFileUtil.copyFileToPath(date, upfile[i], path);
+            list.add(projectUrlConfig.getServerurl() + returnPath);
+        }
+
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("errno", "0");
         params.put("data", list);

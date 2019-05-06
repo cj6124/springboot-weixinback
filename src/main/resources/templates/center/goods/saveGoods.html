@@ -27,7 +27,7 @@
             	<div class="portlet box green-jungle">
                 	<div class="portlet-title">
                     	<div class="caption">
-                    		<i class="icon-plus"></i>添加商品
+                            <i class="icon-plus"></i><span th:text="${goods==null?'添加商品':'编辑商品'}"></span>
                     	</div>
 					</div>
 					
@@ -37,13 +37,13 @@
 	                    <form id="saveGoodsForm" class="form-horizontal">
 		                    <div class="form-body">
 
-                                <input hidden="hidden" type="text" th:value="${goods == null?'':goods.goodsId}">
+                                <input hidden="hidden" name="goodsId" type="text" th:value="${goods?.goodsId}">
 
 		                    	<div class="form-group">
 		                        	<label class="col-md-3 control-label"><span class="field-required"> * </span>商品名字:</label>
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
-		                            		<input id="goodsName" name="goodsName" type="text" class="form-control" placeholder="1-8字">
+		                            		<input id="goodsName" name="goodsName" type="text" class="form-control" th:value="${goods?.goodsName}" placeholder="1-8字">
 		                            	</div>
 									</div>
 								</div>
@@ -52,7 +52,7 @@
 									<label class="col-md-3 control-label"><span class="field-required"> * </span>商品简述:</label>
 									<div class="col-md-4">
 										<div id="input-error">
-											<input id="goodsCharacteristic" name="goodsCharacteristic" type="text" class="form-control" placeholder="1~15字之内">
+											<input id="goodsCharacteristic" name="goodsCharacteristic" type="text" class="form-control" th:value="${goods?.goodsCharacteristic}"  placeholder="1~15字之内">
 										</div>
 									</div>
 								</div>
@@ -61,7 +61,7 @@
                                     <label class="col-md-3 control-label"><span class="field-required"> * </span>商品原价:</label>
                                     <div class="col-md-4">
                                         <div id="input-error">
-                                            <input id="goodsOriginalprice" name="goodsOriginalprice" type="number" class="form-control" placeholder="请输入商品原价">
+                                            <input id="goodsOriginalprice" name="goodsOriginalprice" type="number" class="form-control" th:value="${goods?.goodsOriginalprice}" placeholder="请输入商品原价">
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <label class="col-md-3 control-label"><span class="field-required"> * </span>折扣价格:</label>
                                     <div class="col-md-4">
                                         <div id="input-error">
-                                            <input id="goodsMinprice" name="goodsMinprice" type="number" class="form-control" placeholder="非必须，建议热门商品填上">
+                                            <input id="goodsMinprice" name="goodsMinprice" type="number" class="form-control" th:value="${goods?.goodsMinprice}" placeholder="非必须，建议热门商品填上">
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                     <label class="col-md-3 control-label"><span class="field-required"> * </span>商品库存:</label>
                                     <div class="col-md-4">
                                         <div id="input-error">
-                                            <input id="goodsStock" name="goodsStock" type="number" class="form-control" placeholder="清输入商品库存">
+                                            <input id="goodsStock" name="goodsStock" type="number" class="form-control" th:value="${goods?.goodsStock}" placeholder="清输入商品库存">
                                         </div>
                                     </div>
                                 </div>
@@ -89,8 +89,8 @@
                                     <div class="col-md-4">
                                         <div id="input-error">
                                             <select id="goodsStatus" name="goodsStatus" class="form-control">
-                                                <option value="1">上架</option>
-                                                <option value="0">下架</option>
+                                                <option value="1" th:selected="${goods?.goodsStatus==1}">上架</option>
+                                                <option value="0" th:selected="${goods?.goodsStatus==0}">下架</option>
                                             </select>
                                         </div>
                                     </div>
@@ -101,8 +101,8 @@
                                     <div class="col-md-4">
                                         <div id="input-error">
                                             <select id="goodsIsHot" name="goodsIsHot" class="form-control">
-                                                <option value="0">否</option>
-                                                <option value="1">是</option>
+                                                <option value="0" th:selected="${goods?.goodsIsHot==0}">否</option>
+                                                <option value="1" th:selected="${goods?.goodsIsHot==1}">是</option>
                                             </select>
                                         </div>
                                     </div>
@@ -114,7 +114,8 @@
 										<div id="input-error">
 											<select id="categoryId" name="categoryId" class="form-control">
 												<div th:each="category : ${categories}">
-													<option th:value="${category.categoryId}" th:text="${category.categoryName + ((category.categoryStatus==1)?'':'(已禁用)')}"></option>
+													<option th:value="${category.categoryId}" th:text="${category.categoryName + ((category.categoryStatus==1)?'':'(已禁用)')}"
+                                                            th:selected="${category.categoryId==goods?.categoryId}"></option>
 												</div>
 											</select>
 										</div>
@@ -125,7 +126,7 @@
 		                        	<label class="col-md-3 control-label"><span class="field-required"> * </span>商品视频:</label>
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
-		                            		<input id="goodsVideourl" name="goodsVideourl" type="text" class="form-control" placeholder="可不设置，此栏在上传视频(.mp4格式)后自动填写" readonly>
+		                            		<input id="goodsVideourl" name="goodsVideourl" type="text" class="form-control" th:value="${goods?.goodsVideourl}" placeholder="可不设置，此栏在上传视频(.mp4格式)后自动填写" readonly>
 											<input id="video" type="file" name="video" accept="audio/mp4,video/mp4"/>
 											<div id="videoContent"></div>
 		                            	</div>
@@ -136,7 +137,7 @@
 		                        	<label class="col-md-3 control-label"><span class="field-required"> * </span>商品封面</label>
 		                            <div class="col-md-4">
 		                            	<div id="input-error">
-	                            			<input id="goodsPicurl" name="goodsPicurl" type="text" class="form-control" placeholder="必须设置，此栏在上传封面（.jpg.png）后自动填写" readonly/>
+	                            			<input id="goodsPicurl" name="goodsPicurl" type="text" class="form-control" th:value="${goods?.goodsPicurl}" placeholder="必须设置，此栏在上传封面（.jpg.png）后自动填写" readonly/>
 											<input id="pic" type="file" name="pic" accept="image/jpeg,image/png"/>
 											<div id="picContent"></div>
 	                            		</div>
@@ -148,8 +149,12 @@
                                     <div class="col-md-4">
                                         <div id="input-error">
                                             <div id="pics-con">
-                                                <input id="goodsPics" name="goodsPics" type="text" class="form-control" placeholder="可批量选择图片(上传完后此处显示上传成功)" readonly/>
+                                                <input id="goodsPics" name="goodsPics" type="text" class="form-control" th:value="${pics==null?'':'(双击图片可删除)'}" placeholder="可批量选择图片(上传完后此处显示上传成功)" readonly/>
                                                 <input id="pics" type="file" name="pic" accept="image/jpeg,image/png" multiple/>
+                                                <p th:each="pic : ${pics}">
+                                                    <img ondblclick="deleteImage(this)" class="img-rounded img-responsive" th:src="${pic.imageUrl}" />
+                                                    <input hidden='hidden' name='picsUrl' th:value="${pic.imageUrl}" />
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +164,7 @@
                                     <label class="col-md-3 control-label"><span class="field-required"> * </span>商品详情:</label>
                                     <div class="col-md-6">
                                         <div id="input-error">
-                                            <div  id="wangEditor"></div >
+                                            <div id="wangEditor" th:utext="${goods?.goodsContent}"></div >
                                             <button type="button" class="btn-default" id="button1">获取</button>
                                         </div>
                                     </div>
@@ -170,8 +175,9 @@
 							<div class="form-actions">
 			                    <div class="row">
 			                        <div class="col-md-offset-3 col-md-9">
-			                            <button type="submit" class="btn green-jungle">提 交</button>
-			                            <button type="reset" class="btn grey-salsa btn-outline">取  消</button>
+			                            <button type="submit" class="btn btn-success">提 交</button>
+			                            <button type="button" class="btn btn-default" onclick="$('#goodsListMenu').click()">返回</button>
+			                            <button type="reset" class="btn btn-danger">重 置</button>
 			                        </div>
 			                    </div>
 							</div>
@@ -222,8 +228,11 @@
                     time: 2000
                 });
     		}
-
     	},
+        progressall: function (e, data) {//上传进度
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $("#picContent").html("上传总进度："+progress+"%");
+        },
         fail: function () {
             layer.msg('上传失败了', {icon: 5});
         }
@@ -252,7 +261,10 @@
                     time: 2000
                 });
             }
-
+        },
+        progressall: function (e, data) {//上传进度
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $("#goodsPics").html("上传总进度："+progress+"%");
         },
         fail: function () {
             layer.msg('上传失败了', {icon: 5});
@@ -282,7 +294,10 @@
                     time: 2000
                 });
             }
-
+        },
+        progressall: function (e, data) {//上传进度
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $("#goodsVideourl").html("上传总进度："+progress+"%");
         },
         fail: function () {
             layer.msg('上传失败了', {icon: 5});
@@ -291,7 +306,7 @@
     
     var submitFrom = function() {
     	$('#saveGoodsForm').ajaxSubmit({
-    		url: $("#fileServer").val() + '/goods/addGoods',
+    		url: $("#fileServer").val() + '/goods/saveGoods',
     		type: 'POST',
 			data: {
                 'goodsContent': editor.txt.html()
@@ -299,12 +314,12 @@
     		success: function(data) {
     			
     			if (data.status == 200) {
-                    layer.msg('商品添加成功', {icon: 6});
+                    layer.msg('商品添加/更新成功', {icon: 6});
     			} else {
                     layer.msg(data.msg, {icon: 5});
     			}
-    			//todo 后期改成跳到商品列表
-    			// $("#bgmListMenu").click();
+                //跳转页面
+                $('#goodsListMenu').click();
     		},fail: function (e) {
                 layer.msg('出现了未知错误', {icon: 5});
             }

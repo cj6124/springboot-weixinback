@@ -16,6 +16,8 @@ public enum ResultEnum implements Serializable {
     UPLOAD_ERROR(1, "上传失败"),
 
     PRICE_ERROR(2, "折扣价大于原价"),
+
+    GOODS_CONTENT(3, "商品详情必须填写"),
     ;
 
     private Integer code;
