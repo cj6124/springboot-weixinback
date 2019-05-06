@@ -30,11 +30,11 @@
 	</div>
 
 <script>
-    /////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
     //
     // 查改删函数
     //
-    /////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     //查看轮播图函数 todo 加上加载图标，不然卡住一段时间会以为是死机
     var showPics = function (goodsId) {
@@ -66,32 +66,39 @@
     }
 
     //删除商品函数
-    var deleteBgm = function(bgmId) {
+    var deleteGoods = function(goodsId) {
 
         //弹出警告框
-
-        $.ajax({
-            url: $("#hdnContextPath").val() + '/goods/delBgm.action?bgmId=' + bgmId,
-            type: "POST",
-            success: function(data) {
-                if (data.status == 200 && data.msg == 'OK') {
-                    alert('删除成功~~');
-                    var jqGrid = $("#goodsList");
-                    jqGrid.jqGrid().trigger("reloadGrid");
-                }
-            },
-            fail: function (e) {
-                layer.msg('未知错误,请联系管理员', {icon: 5});
+        layer.msg('确认删除该商品吗？', {
+            time: 0 //不自动关闭
+            ,btn: ['确认删除', '取消']
+            ,yes: function(index){
+                layer.close(index);
+                $.ajax({
+                    url: $("#hdnContextPath").val() + '/goods/delGoods?goodsId=' + goodsId,
+                    type: "POST",
+                    success: function(data) {
+                        if (data.status == 200 && data.msg == 'OK') {
+                            layer.msg('删除成功~~',{icon: 6});
+                            var jqGrid = $("#goodsList");
+                            jqGrid.jqGrid().trigger("reloadGrid");
+                        }
+                    },
+                    fail: function (e) {
+                        layer.msg('未知错误,请联系管理员', {icon: 5});
+                    }
+                });
             }
-        })
+        });
+
     }
 
 
-	/////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 	//
     // 下面都是表格函数
 	//
-    /////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
     var GoodsList = function() {
 
         // 构建bgm列表对象
@@ -149,7 +156,7 @@
                                             '<span class="glyphicon glyphicon-wrench"></span> 编辑' +
                                         '</button>' +
                                         '<p></p>' +
-                                        '<button type="button" class="btn btn-danger" onclick=showPics("' + rowObject.goodsId + '")>' +
+                                        '<button type="button" class="btn btn-danger" onclick=deleteGoods("' + rowObject.goodsId + '")>' +
                                             '<span class="glyphicon glyphicon-trash"></span> 删除' +
                                         '</button>';
                             return html;

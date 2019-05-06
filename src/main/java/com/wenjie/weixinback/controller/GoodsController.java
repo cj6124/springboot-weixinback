@@ -65,6 +65,11 @@ public class GoodsController {
         return JsonResult.ok();
     }
 
+    /**
+     * 搜索所有商品信息
+     * @param page 页数
+     * @return 分页信息体
+     */
     @RequestMapping("/queryAllGoods")
     @ResponseBody
     public PagedResult queryAllGoods(@RequestParam(defaultValue = "1") Integer page){
@@ -73,6 +78,12 @@ public class GoodsController {
         return goodsService.queryAllGoods(page, 10);
     }
 
+    /**
+     * 查询单个商品的所有轮播图
+     * @param goodsId 商品id
+     * @return layer要求的数据格式
+     * @link https://www.layui.com/doc/modules/layer.html
+     */
     @ResponseBody
     @RequestMapping("/queryPics")
     public Map<String, Object> queryPics(String goodsId){
@@ -100,5 +111,10 @@ public class GoodsController {
         return res;
     }
 
-
+    @ResponseBody
+    @PostMapping("/delGoods")
+    public JsonResult delGoods(String goodsId){
+        goodsService.delGoods(goodsId);
+        return JsonResult.ok();
+    }
 }

@@ -117,4 +117,16 @@ public class GoodsServiceImpl implements GoodsService {
             imageMapper.insertSelective(image);
         }
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void delGoods(String goodsId) {
+        //删除商品
+        goodsMapper.deleteByPrimaryKey(goodsId);
+        //删除商品的轮播图
+        Example imageExample = new Example(Image.class);
+        Criteria criteria = imageExample.createCriteria();
+        criteria.andEqualTo("goodsId", goodsId);
+        imageMapper.deleteByExample(imageExample);
+    }
 }

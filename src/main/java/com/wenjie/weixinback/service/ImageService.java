@@ -4,6 +4,10 @@ import com.wenjie.weixinback.pojo.Image;
 
 import java.util.List;
 
+/**
+ * 轮播图业务
+ * @author chenwenjie
+ */
 public interface ImageService {
 
     /**

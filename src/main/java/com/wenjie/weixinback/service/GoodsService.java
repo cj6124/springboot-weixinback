@@ -4,6 +4,7 @@ import com.wenjie.weixinback.common.utils.PagedResult;
 import com.wenjie.weixinback.pojo.Goods;
 
 /**
+ * 商品业务
  * @author chenwenjie
  */
 public interface GoodsService {
@@ -36,4 +37,10 @@ public interface GoodsService {
      * @param goods 商品pojo
      */
     public void updataGoods(String[] picsUrl, Goods goods);
+
+    /**
+     * 删除商品
+     * @param goodsId 商品id
+     */
+    public void delGoods(String goodsId);
 }

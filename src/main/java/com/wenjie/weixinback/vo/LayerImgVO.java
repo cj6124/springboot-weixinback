@@ -1,11 +1,8 @@
 package com.wenjie.weixinback.vo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
-import javax.persistence.Column;
 import java.io.Serializable;
-import java.util.Date;
+
 
 /**
  * @author chenwenjie
