@@ -111,10 +111,24 @@ public class GoodsController {
         return res;
     }
 
+    /**
+     * 删除商品接口
+     * @param goodsId 商品id
+     * @return 成功信息
+     */
     @ResponseBody
     @PostMapping("/delGoods")
     public JsonResult delGoods(String goodsId){
         goodsService.delGoods(goodsId);
         return JsonResult.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryGoodsByParams")
+    public PagedResult queryGoodsByParams(Integer page, @RequestParam(defaultValue = "10")Integer pageSize, GoodsVO goodsVO) {
+
+        Goods goods = new Goods();
+        BeanUtils.copyProperties(goodsVO, goods);
+        return goodsService.queryGoodsByParams(page, pageSize, goods);
     }
 }

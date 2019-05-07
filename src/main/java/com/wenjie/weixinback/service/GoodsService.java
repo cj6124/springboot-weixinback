@@ -43,4 +43,14 @@ public interface GoodsService {
      * @param goodsId 商品id
      */
     public void delGoods(String goodsId);
+
+
+    /**
+     * 按照条件查询商品列表
+     * @param page 页码
+     * @param pageSize 页面大小
+     * @param goods 商品pojo
+     * @return 商品列表分页体
+     */
+    public PagedResult queryGoodsByParams(Integer page, Integer pageSize, Goods goods);
 }

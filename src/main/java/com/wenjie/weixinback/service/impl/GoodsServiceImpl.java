@@ -129,4 +129,42 @@ public class GoodsServiceImpl implements GoodsService {
         criteria.andEqualTo("goodsId", goodsId);
         imageMapper.deleteByExample(imageExample);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    public PagedResult queryGoodsByParams(Integer page, Integer pageSize, Goods goods) {
+        PageHelper.startPage(page, pageSize);
+        Example goodsExample = new Example(Goods.class);
+        Criteria criteria = goodsExample.createCriteria();
+        if (!"all".equals(goods.getCategoryId())){
+            criteria.andEqualTo("categoryId", goods.getCategoryId());
+        }
+        criteria.andLike("goodsName","%" + goods.getGoodsName() + "%");
+
+        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
+
+        PageInfo<Goods> goodsPageInfo = new PageInfo<>(goodsList);
+
+        //类型转换
+        List<GoodsVO> goodsVOS = goodsList.stream().map(e -> {
+            GoodsVO goodsVO = new GoodsVO();
+            BeanUtils.copyProperties(e, goodsVO);
+            //查询该商品分类对应的名字
+            Category category = categoryMapper.selectByPrimaryKey(goodsVO.getCategoryId());
+            if (category.getCategoryStatus() == 0){
+                goodsVO.setCategoryName(category.getCategoryName() + "(已禁用)");
+            }else {
+                goodsVO.setCategoryName(category.getCategoryName());
+            }
+            return goodsVO;
+        }).collect(Collectors.toList());
+
+        PagedResult grid = new PagedResult();
+        grid.setTotal(goodsPageInfo.getPages());
+        grid.setRows(goodsVOS);
+        grid.setPage(page);
+        grid.setRecords(goodsPageInfo.getTotal());
+
+        return grid;
+    }
 }

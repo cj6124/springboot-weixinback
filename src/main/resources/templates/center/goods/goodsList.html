@@ -1,3 +1,4 @@
+<div xmlns:th="http://www.thymeleaf.org">
 	<!-- BEGIN PAGE HEADER-->
 	<!-- BEGIN PAGE BAR -->
 	<div class="page-bar">
@@ -19,20 +20,45 @@
 	<!-- END PAGE HEADER-->
                         
 	<div class="row">
+		<!-- 搜索内容 -->
+		<div class="col-md-12">
+			<br/>
+			<form id="searchGoodsListForm" class="form-inline" method="post" role="form">
+				<div class="form-group">
+					<label class="sr-only" for="goodsName">商品名:</label>
+					<input id="goodsName" name="goodsName" type="text" class="form-control" placeholder="清输入商品名" />
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="categoryId">分类</label>
+					<!--<input id="nickname" name="nickname" type="text" class="form-control" placeholder="分类" />-->
+                    <select id="categoryId" name="categoryId" class="form-control">
+                        <option value="all">全部</option>
+                        <div th:each="category : ${categories}">
+                            <option th:value="${category.categoryId}" th:text="${category.categoryName + ((category.categoryStatus==1)?'':'(已禁用)')}"></option>
+                        </div>
+                    </select>
+				</div>
+				<button id="searchGoodsListButton" class="btn yellow-casablanca" type="button">搜    索</button>
+			</form>
+		</div>
+
+
+		<!--表格-->
     	<div class="col-md-12">
-                   
+
 			<div class="goodsList_wrapper">
                 <table id="goodsList"></table>
     			<div id="goodsListPager"></div>
              </div>
-             
+
 		</div>
 	</div>
+</div>
 
 <script>
     ///////////////////////////////////////////////////////
     //
-    // 查改删函数
+    // 改删函数
     //
     ///////////////////////////////////////////////////////
 
@@ -94,9 +120,10 @@
     }
 
 
+
     ///////////////////////////////////////////////////////
 	//
-    // 下面都是表格函数
+    // 下面都是表格函数、查询函数
 	//
     ///////////////////////////////////////////////////////
     var GoodsList = function() {
@@ -187,6 +214,20 @@
 
             // 不显示水平滚动条
             jqGrid.closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+
+            // 条件查询所有商品列表
+            $("#searchGoodsListButton").click(function(){
+                if ($('#goodsName').val() == ''){
+                    layer.msg('商品名不能为空', {icon: '5'});
+                    return;
+                }
+
+                var searchGoodsListForm = $("#searchGoodsListForm");
+                jqGrid.jqGrid().setGridParam({
+                    page: 1,
+                    url: "/goods/queryGoodsByParams?" + searchGoodsListForm.serialize()
+                }).trigger("reloadGrid");
+            });
 
         }
 

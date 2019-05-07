@@ -71,7 +71,9 @@ public class MainController {
      * @return ModelAndView
      */
     @RequestMapping("/goodsListPage")
-    public ModelAndView goodListPage(){
-        return new ModelAndView("center/goods/goodsList");
+    public String goodListPage(ModelMap result){
+        List<Category> categories = categoryService.queryAllCategory();
+        result.put("categories", categories);
+        return "center/goods/goodsList";
     }
 }
